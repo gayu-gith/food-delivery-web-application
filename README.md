@@ -42,6 +42,55 @@ Once on your successful login you’ll be redirected to the dashboard and the op
  
 On completion navigate back to the XAMPP Control Panel and turn off/Stop the Apache and MySQL. 
 
+sql commands : 
+ 
+CREATE DATABASE food_delivery; 
+ 
+USE food_delivery; 
+ 
+CREATE TABLE users (     
+id INT AUTO_INCREMENT PRIMARY KEY,     
+username VARCHAR(50) NOT NULL UNIQUE,    
+email VARCHAR(100) NOT NULL, 
+password VARCHAR(255) NOT NULL 
+); 
+ 
+CREATE TABLE restaurants ( 
+id INT AUTO_INCREMENT PRIMARY KEY,     
+name VARCHAR(100) NOT NULL,     
+address TEXT NOT NULL,    
+contact VARCHAR(15) NOT NULL 
+); 
+ 
+CREATE TABLE food_items ( 
+id INT AUTO_INCREMENT PRIMARY KEY,     
+restaurant_id INT NOT NULL,     
+name VARCHAR(100) NOT NULL, 
+description TEXT, 
+price DECIMAL(10, 2) NOT NULL, 
+FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) 
+); 
+ 
+CREATE TABLE orders ( 
+    id INT AUTO_INCREMENT PRIMARY KEY, 
+    user_id INT NOT NULL,    
+    restaurant_id INT NOT NULL,     
+    total_amount DECIMAL(10, 2) NOT NULL, 
+    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,     
+    FOREIGN KEY (user_id) REFERENCES users(id), 
+    FOREIGN KEY (restaurant_id) REFERENCES restaurants(id) 
+); 
+
+CREATE TABLE order_items (     
+id INT AUTO_INCREMENT PRIMARY KEY, 
+order_id INT NOT NULL,     
+food_item_id INT NOT NULL,     
+quantity INT NOT NULL, 
+FOREIGN KEY (order_id) REFERENCES orders(id), 
+FOREIGN KEY (food_item_id) REFERENCES food_items(id) 
+); 
+
+
 ![food1](https://github.com/user-attachments/assets/514e1fa9-38a3-48c4-8782-bf14b8e628ea)
 
 ![food2](https://github.com/user-attachments/assets/50a8b2ac-7f97-4682-b6fa-3ffd63406f04)
